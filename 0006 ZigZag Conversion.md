@@ -50,7 +50,36 @@ public String convert(String s, int numRows) {
 
 
 
+#### 优化 Visit by Row
 
+No need to traverse the whole string, 而是按照每个row该有多少就visit 多少, <font color = grape>**可以优化掉StringBuilder的array, 只要一个就够了**</font>
 
+<font color = grape>**用i作为remainder, j作为quotient, index就成了 i + j * round**</font>
 
+对于任何i不是1也不是numRows-1的, 同一行还有一个对应的char, <font color = grape>**其index就是 (j + 1) * round - i, 从下一个round开始往前数相同的offset**</font> 
+
+```java
+public String convert(String s, int numRows) {
+
+    if (s == null || s.length() == 0) {return null;}
+    if (numRows == 1) {return s;}
+
+    StringBuilder result = new StringBuilder();
+    int n = s.length();
+    int round = 2 * numRows - 2;
+
+    for (int i = 0; i < numRows; i++) {
+        for (int j = 0; i + j * round < n; j ++) {
+
+            result.append(s.charAt(i + j * round));
+            // deal with the uprise chars
+            // corresponding char
+            if (i != 0 && i != numRows - 1 && ((j+1)* round - i) < n) {
+                result.append(s.charAt((j+1)* round - i));
+            } 
+        }
+    }  
+    return result.toString();     
+}
+```
 
