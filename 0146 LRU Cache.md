@@ -11,15 +11,22 @@ https://leetcode.com/problems/lru-cache/
 
 + put同样也是O(1), 但是为了做到<font color = grape>**detect least recently used key, 只有可能用priorityQueue或者linkdedList, 但是pq不能get, 也没法改变pq里面的element位置, 所以只能用linkedList**</font>
 
+#### Get
+
 那么HashTable,为了实现O(1)的get, 需要一个`<key, ListNode>` 的Hash Table, 且value就是key的preNode, 每次get时, 先找到对应的node, 然后
 
-<font color = red>**将其移动到tail, 并且原来的位置delete掉, 然后修改所有被影响的HashTable里面的preNode**</font>
+<font color = red>**将其移动到tail, 并且原来的位置delete掉, 然后修改Hashtable中被影响的cur.next(现在对应value为pre)和移动到tail后面的cur(对应value为tail)**</font>
 
-put需要默认放在list最后面, 直接跟着tail放就好
+#### Put
 
-<font color = grape>**如果put的时候Hashtable的size已经等于capacity了, 在链表里直接修改tail的key和val, 在map里需要先删除原来的dummy.next,然后重新添加**</font>
++ 如果<font color = grape>**HashTable里已经有这个key, 直接把对应node move to tail, 然后修改node的value, HashTable不变**</font>
++ 如果size小于capacity, <font color = grape>**create new node, 接在tail后面, 把<key, tail>放入HashTable中**</font>
 
++ 剩下的情况就是size == capacity,<font color = grape>**HashTable直接删除dummy.next.key, 然后在链表里直接修改dummy.next的key和val, 在HashTable中添加<dummy.next.key, dummy>, 最后move to tail即可**</font>
 
+  + 为什么不直接从链表和hashtable都删除掉dummy.next, 然后直接在tail后面接一个? 因为如果capacity = 1, 此时tail已经被删掉了, 无法接在后面, 而此处只删hashtable不删listnode就可以避免这种情况
+
+  
 
 #### 这个考的频率极高,必须背的滚瓜烂熟!
 
