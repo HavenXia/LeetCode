@@ -6,6 +6,8 @@ https://leetcode.com/problems/linked-list-cycle/
 
 # 思路
 
+首先此处应该是没有self loop的
+
 #### HashTable
 
 相当简单, 直接遍历check, 如果在set里就return true, 不在就加入set
@@ -29,6 +31,7 @@ public boolean hasCycle(ListNode head) {
     ListNode left = head;
     ListNode right = head;
 	// edge case: one single node
+    // 此时如果不检测一下,  会直接return true
     if (head.next == null) {return false;}
 
     while (right != null) {
