@@ -2,8 +2,6 @@
 
 https://leetcode.com/problems/container-with-most-water/
 
-
-
 # 思路
 
 其实就是找到 `(j - i) * Math.min(height[i], height[j])` 的最小值!
